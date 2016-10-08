@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/rs/xid"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var db *sql.DB
