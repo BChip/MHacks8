@@ -21,16 +21,16 @@ func createProfile(res http.ResponseWriter, req *http.Request) {
 }
 
 func createListing(res http.ResponseWriter, req *http.Request) {
-	firstN := req.FormValue("firstName")
-	lastN := req.FormValue("lastName")
-	age := req.FormValue("age")
-	gender := req.FormValue("gender")
-	city := req.FormValue("city")
-	state := req.FormValue("state")
-	startDate := req.FormValue("startDate")
-	endDate := req.FormValue("endDate")
-	interests := req.FormValue("interests")
-	uuid := req.FormValue("uuid")
+	// firstN := req.FormValue("firstName")
+	// lastN := req.FormValue("lastName")
+	// age := req.FormValue("age")
+	// gender := req.FormValue("gender")
+	// city := req.FormValue("city")
+	// state := req.FormValue("state")
+	// startDate := req.FormValue("startDate")
+	// endDate := req.FormValue("endDate")
+	// interests := req.FormValue("interests")
+	// uuid := req.FormValue("uuid")
 
 	// _, err := db.Exec("INSERT INTO travelListings(firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid) VALUES(?,?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid)
 
