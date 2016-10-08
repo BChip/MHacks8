@@ -20,7 +20,7 @@ func createProfile(res http.ResponseWriter, req *http.Request) {
 }
 
 func createListing(res http.ResponseWriter, req *http.Request) {
-	firstN := req.FormValue("firstName")
+	/*firstN := req.FormValue("firstName")
 	lastN := req.FormValue("lastName")
 	age := req.FormValue("age")
 	gender := req.FormValue("gender")
@@ -28,7 +28,7 @@ func createListing(res http.ResponseWriter, req *http.Request) {
 	state := req.FormValue("state")
 	startDate := req.FormValue("startDate")
 	endDate := req.FormValue("endDate")
-	interests := req.FormValue("interests")
+	interests := req.FormValue("interests")*/
 
 	//_, err = db.Exec("INSERT INTO travelListings() VALUES()",
 	res.Write([]byte("Listing Created!"))
@@ -77,17 +77,15 @@ func readMyListings(res http.ResponseWriter, req *http.Request) {
 }
 
 func deleteListing(res http.ResponseWriter, req *http.Request) {
-	id := req.URL.Query.Get("id")
-	UUID := req.URL.Query.Get("UUID")
+	id := req.URL.Query().Get("id")
+	UUID := req.URL.Query().Get("UUID")
 	query, err := db.Exec("DELETE FROM travelListings WHERE id=? AND UUID=?", id, UUID)
 	if err != nil {
-		checkError(err)
 		http.Error(res, "Unable to delete book", 500)
 		return
 	}
 	affected, err := query.RowsAffected()
 	if err != nil {
-		checkError(err)
 		http.Error(res, "Server error", 500)
 		return
 	}
