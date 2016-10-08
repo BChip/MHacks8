@@ -30,7 +30,11 @@ func createListing(res http.ResponseWriter, req *http.Request) {
 	endDate := req.FormValue("endDate")
 	interests := req.FormValue("interests")
 
-	_, err = db.Exec("INSERT INTO travelListings(firstName, lastName, age, gender, city, state, startDate, endDate, interests) VALUES(?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests
+	_, err := db.Exec("INSERT INTO travelListings(firstName, lastName, age, gender, city, state, startDate, endDate, interests) VALUES(?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests)
+	if err != nil {
+		http.Error(res, "Server error, unable to create your account.", 500)
+		return
+	}
 	res.Write([]byte("Listing Created!"))
 }
 
@@ -97,8 +101,53 @@ func deleteListing(res http.ResponseWriter, req *http.Request) {
 
 }
 
+func readMatchedListings(res http.ResponseWriter, req *http.Request) {
+	sDate := req.FormValue("startDate")
+	eDate := req.FormValue("endDate")
+	city := req.FormValue("city")
+	state := req.FormValue("state")
+	rows, err := db.Query("SELECT * FROM travelListings WHERE startDate >= ? AND endDate <= ? AND city=? AND state=?", sDate, eDate, city, state)
+	if err != nil {
+		res.Write([]byte("Error"))
+	}
+	defer rows.Close()
+	columns, err := rows.Columns()
+	if err != nil {
+		res.Write([]byte("Error"))
+	}
+	count := len(columns)
+	tableData := make([]map[string]interface{}, 0)
+	values := make([]interface{}, count)
+	valuePtrs := make([]interface{}, count)
+	for rows.Next() {
+		for i := 0; i < count; i++ {
+			valuePtrs[i] = &values[i]
+		}
+		rows.Scan(valuePtrs...)
+		entry := make(map[string]interface{})
+		for i, col := range columns {
+			var v interface{}
+			val := values[i]
+			b, ok := val.([]byte)
+			if ok {
+				v = string(b)
+			} else {
+				v = val
+			}
+			entry[col] = v
+		}
+		tableData = append(tableData, entry)
+	}
+	jsonData, err := json.Marshal(tableData)
+	if err != nil {
+		res.Write([]byte("Error"))
+	}
+	res.Header().Set("Content-Type", "application/json")
+	res.Write(jsonData)
+}
+
 func main() {
-	/*db, err := sql.Open("mysql", "root:mhacks@/main")
+	db, err := sql.Open("mysql", "root:mhacks@/main")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -107,10 +156,11 @@ func main() {
 	err = db.Ping()
 	if err != nil {
 		panic(err.Error())
-	}*/
+	}
 
 	http.HandleFunc("/createProfile", createProfile)
 	http.HandleFunc("/createListing", createListing)
 	http.HandleFunc("/deleteListing", deleteListing)
+	http.HandleFunc("/readMatchedListings", readMatchedListings)
 	http.ListenAndServe(":8080", nil)
 }
