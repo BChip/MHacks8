@@ -166,7 +166,7 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Println("we hit it here")
+
 	http.HandleFunc("/createProfile", createProfile)
 	http.HandleFunc("/createListing", createListing)
 	http.HandleFunc("/deleteListing", deleteListing)
