@@ -33,6 +33,7 @@ func createListing(res http.ResponseWriter, req *http.Request) {
 	interests := req.FormValue("interests")
 	uuid := req.FormValue("uuid")
 	fmt.Println("HI")
+	fmt.Println(db)
 	_, err := db.Exec("INSERT INTO travelListings(firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid) VALUES(?,?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid)
 	fmt.Println("After")
 	if err != nil {
