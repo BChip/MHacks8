@@ -33,6 +33,7 @@ func createListing(res http.ResponseWriter, req *http.Request) {
 	uuid := req.FormValue("uuid")
 
 	_, err := db.Exec("INSERT INTO travelListings(firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid) VALUES(?,?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid)
+	log.Error(err)
 	if err != nil {
 		http.Error(res, "Server error, unable to create your account.", 500)
 		return
