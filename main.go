@@ -32,8 +32,6 @@ func createListing(res http.ResponseWriter, req *http.Request) {
 	endDate := req.FormValue("endDate")
 	interests := req.FormValue("interests")
 	uuid := req.FormValue("uuid")
-	fmt.Println("HI")
-	fmt.Println(db)
 	_, err := db.Exec("INSERT INTO travelListings(firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid) VALUES(?,?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid)
 	fmt.Println("After")
 	if err != nil {
@@ -154,7 +152,8 @@ func readMatchedListings(res http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	db, err := sql.Open("mysql", "root:mhacks@/main")
+	var err error
+	db, err = sql.Open("mysql", "root:mhacks@/main")
 	if err != nil {
 
 		panic(err.Error())
