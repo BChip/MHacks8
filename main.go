@@ -20,7 +20,7 @@ func createProfile(res http.ResponseWriter, req *http.Request) {
 }
 
 func createListing(res http.ResponseWriter, req *http.Request) {
-	/*firstN := req.FormValue("firstName")
+	firstN := req.FormValue("firstName")
 	lastN := req.FormValue("lastName")
 	age := req.FormValue("age")
 	gender := req.FormValue("gender")
@@ -28,9 +28,9 @@ func createListing(res http.ResponseWriter, req *http.Request) {
 	state := req.FormValue("state")
 	startDate := req.FormValue("startDate")
 	endDate := req.FormValue("endDate")
-	interests := req.FormValue("interests")*/
+	interests := req.FormValue("interests")
 
-	//_, err = db.Exec("INSERT INTO travelListings() VALUES()",
+	_, err = db.Exec("INSERT INTO travelListings(firstName, lastName, age, gender, city, state, startDate, endDate, interests) VALUES(?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests
 	res.Write([]byte("Listing Created!"))
 }
 
