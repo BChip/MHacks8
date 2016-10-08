@@ -172,5 +172,7 @@ func main() {
 	http.HandleFunc("/deleteListing", deleteListing)
 	http.HandleFunc("/readMyListings", readMyListings)
 	http.HandleFunc("/readMatchedListings", readMatchedListings)
-	http.ListenAndServe(":8080", nil)
+	go http.ListenAndServe(":8080", nil)
+
+	select {}
 }
