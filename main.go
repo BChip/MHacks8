@@ -49,7 +49,7 @@ func readMyListings(res http.ResponseWriter, req *http.Request) {
 	tableData := make([]map[string]interface{}, 0)
 	values := make([]interface{}, count)
 	valuePtrs := make([]interface{}, count)
-	for rows.Next() {	t	title := req.FormValue("listingsTitle")itle := req.FormValue("listingsTitle")
+	for rows.Next() {
 		for i := 0; i < count; i++ {
 			valuePtrs[i] = &values[i]
 		}
