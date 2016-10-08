@@ -36,7 +36,7 @@ func createListing(res http.ResponseWriter, req *http.Request) {
 	_, err := db.Exec("INSERT INTO travelListings(firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid) VALUES(?,?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid)
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("die", err)
 		http.Error(res, "Server error, unable to create your account.", 500)
 		return
 	}
