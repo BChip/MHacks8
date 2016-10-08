@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -21,24 +22,24 @@ func createProfile(res http.ResponseWriter, req *http.Request) {
 }
 
 func createListing(res http.ResponseWriter, req *http.Request) {
-	// firstN := req.FormValue("firstName")
-	// lastN := req.FormValue("lastName")
-	// age := req.FormValue("age")
-	// gender := req.FormValue("gender")
-	// city := req.FormValue("city")
-	// state := req.FormValue("state")
-	// startDate := req.FormValue("startDate")
-	// endDate := req.FormValue("endDate")
-	// interests := req.FormValue("interests")
-	// uuid := req.FormValue("uuid")
-
-	// _, err := db.Exec("INSERT INTO travelListings(firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid) VALUES(?,?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid)
-
-	// if err != nil {
-	// 	fmt.Println("die", err)
-	// 	http.Error(res, "Server error, unable to create your account.", 500)
-	// 	return
-	// }
+	firstN := req.FormValue("firstName")
+	lastN := req.FormValue("lastName")
+	age := req.FormValue("age")
+	gender := req.FormValue("gender")
+	city := req.FormValue("city")
+	state := req.FormValue("state")
+	startDate := req.FormValue("startDate")
+	endDate := req.FormValue("endDate")
+	interests := req.FormValue("interests")
+	uuid := req.FormValue("uuid")
+	fmt.Println("HI")
+	_, err := db.Exec("INSERT INTO travelListings(firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid) VALUES(?,?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid)
+	fmt.Println("After")
+	if err != nil {
+		fmt.Println("die", err)
+		http.Error(res, "Server error, unable to create your account.", 500)
+		return
+	}
 	res.Write([]byte("Listing Created!"))
 }
 
