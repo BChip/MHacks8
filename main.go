@@ -155,8 +155,12 @@ func readMatchedListings(res http.ResponseWriter, req *http.Request) {
 func main() {
 	db, err := sql.Open("mysql", "root:mhacks@/main")
 	if err != nil {
+
 		panic(err.Error())
+
 	}
+	fmt.Println("BLAH")
+
 	defer db.Close()
 
 	err = db.Ping()
