@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/rs/xid"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/rs/xid"
 )
 
 var db *sql.DB
@@ -30,8 +30,9 @@ func createListing(res http.ResponseWriter, req *http.Request) {
 	startDate := req.FormValue("startDate")
 	endDate := req.FormValue("endDate")
 	interests := req.FormValue("interests")
+	uuid := req.FormValue("uuid")
 
-	_, err := db.Exec("INSERT INTO travelListings(firstName, lastName, age, gender, city, state, startDate, endDate, interests) VALUES(?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests)
+	_, err := db.Exec("INSERT INTO travelListings(firstName, lastName, age, gender, city, state, startDate, endDate, interests, uuid) VALUES(?,?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid)
 	if err != nil {
 		http.Error(res, "Server error, unable to create your account.", 500)
 		return
@@ -40,6 +41,7 @@ func createListing(res http.ResponseWriter, req *http.Request) {
 }
 
 func readMyListings(res http.ResponseWriter, req *http.Request) {
+
 	uuid := req.FormValue("uuid")
 	rows, err := db.Query("SELECT * FROM travelListings WHERE uuid=?", uuid)
 	if err != nil {
