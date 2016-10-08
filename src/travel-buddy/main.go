@@ -8,6 +8,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/rs/xid"
+	"os"
 )
 
 var db *sql.DB
@@ -153,7 +154,7 @@ func readMatchedListings(res http.ResponseWriter, req *http.Request) {
 
 func main() {
 	var err error
-	db, err = sql.Open("mysql", "root:mhacks@tcp(10.0.0.3:3306)/main")
+	db, err = sql.Open("mysql", "root:mhacks@tcp(173.236.121.66:3306)/main")
 	if err != nil {
 
 		panic(err.Error())
@@ -172,7 +173,13 @@ func main() {
 	http.HandleFunc("/deleteListing", deleteListing)
 	http.HandleFunc("/readMyListings", readMyListings)
 	http.HandleFunc("/readMatchedListings", readMatchedListings)
-	go http.ListenAndServe(":8080", nil)
+	if _, err := os.Stat("/tls/current.chain"); err != nil {
+		if os.IsNotExist(err) {
+			go http.ListenAndServe(":8080", nil)
+		}
+	} else {
+		go http.ListenAndServeTLS(":8080", "/tls/current.chain", "/tls/current.key", nil)
+	}
 
 	select {}
 }
