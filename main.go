@@ -32,7 +32,7 @@ func createListing(res http.ResponseWriter, req *http.Request) {
 	interests := req.FormValue("interests")
 	uuid := req.FormValue("uuid")
 
-	_, err := db.Exec("INSERT INTO travelListings(firstName, lastName, age, gender, city, state, startDate, endDate, interests, uuid) VALUES(?,?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid)
+	_, err := db.Exec("INSERT INTO travelListings(firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid) VALUES(?,?,?,?,?,?,?,?,?,?)", firstN, lastN, age, gender, city, state, startDate, endDate, interests, uuid)
 	if err != nil {
 		http.Error(res, "Server error, unable to create your account.", 500)
 		return
@@ -85,8 +85,8 @@ func readMyListings(res http.ResponseWriter, req *http.Request) {
 
 func deleteListing(res http.ResponseWriter, req *http.Request) {
 	id := req.URL.Query().Get("id")
-	UUID := req.URL.Query().Get("UUID")
-	query, err := db.Exec("DELETE FROM travelListings WHERE id=? AND UUID=?", id, UUID)
+	uuid := req.URL.Query().Get("UUID")
+	query, err := db.Exec("DELETE FROM travelListings WHERE id=? AND uuid=?", id, uuid)
 	if err != nil {
 		http.Error(res, "Unable to delete book", 500)
 		return
