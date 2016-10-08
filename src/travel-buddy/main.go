@@ -154,7 +154,7 @@ func readMatchedListings(res http.ResponseWriter, req *http.Request) {
 
 func main() {
 	var err error
-	db, err = sql.Open("mysql", "root:mhacks@tcp(173.236.121.66:3306)/main")
+	db, err = sql.Open("mysql", "root:mhacks@tcp(database:3306)/main")
 	if err != nil {
 
 		panic(err.Error())
