@@ -167,7 +167,7 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
-
+	http.HandleFunc("/", http.NotFound)
 	http.HandleFunc("/createProfile", createProfile)
 	http.HandleFunc("/createListing", createListing)
 	http.HandleFunc("/deleteListing", deleteListing)
